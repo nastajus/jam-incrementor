@@ -14,22 +14,27 @@ class Balances extends CI_Model implements ISUD{
 
     function Insert($data)
     {
-        // TODO: Implement Insert() method.
+        $this->db->insert('balances',$data);
+        return $this->db->insert_id();
     }
 
     function Select($id)
     {
-        // TODO: Implement Select() method.
+        $query = $this->db->get_where('balances', array('id' => $id), 1, 0);
+        return $query->db->result_array();
     }
 
     function SelectAll()
     {
-        // TODO: Implement SelectAll() method.
+        $query = $this->db->get('balances');
+        return $query->db->result_array();
     }
 
     function Update($id, $data)
     {
-        // TODO: Implement Update() method.
+        $this->db->where('id', $id);
+        $query = $this->db->update('balances', $data);
+        return $query->db->result_array();
     }
 
     function Delete($id)
