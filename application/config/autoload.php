@@ -114,3 +114,17 @@ $autoload['model'] = array();
 
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */
+
+
+
+
+
+
+// PHP Interface in CodeIgniter, how and where?
+// https://ellislab.com/forums/viewthread/142736/#747981
+$autoload['interfaces'] = array('ISUD');
+foreach($autoload['interfaces'] as $interface)
+{
+    include_once(APPPATH."/interfaces/$interface.php");
+}
+
