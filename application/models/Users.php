@@ -16,7 +16,7 @@ class Users extends CI_Model implements ISUD{
     {
         //Get Salt
         $this->db->select('*');
-        $this->db->from('user');
+        $this->db->from('users');
         $this->db->where('username', $username);
 
         $query = $this->db->get();
@@ -28,7 +28,7 @@ class Users extends CI_Model implements ISUD{
 
 
             $this->db->select('id, username, password');
-            $this->db->from('user');
+            $this->db->from('users');
             $this->db->where('username', $username);
             $this->db->where('password', hash('sha512',$password.$salt));
             $this->db->limit(1);

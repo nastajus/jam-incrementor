@@ -9,34 +9,47 @@ class Main extends CI_Controller {
             $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
             $this->form_validation->set_rules('password', 'Password', 'required|xss_clean');
 
-            if ($this->form_validation->run() == FALSE)
-            {
-                //$this->load->view('myform');
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+            $this->load->model('users');
 
-                //They did it wront send tem back to login
+            $cond = $this->users->Login($username, $password);
+
+            if ($this->form_validation->run() == TRUE)
+            {
+                //$this->load->view('formsuccess');
+                //They were right send them to the members page
                 $this->load->view('header');
                 echo var_dump($this->input->post());
                 echo validation_errors();
-                $this->load->view('loginpage');
-                $this->load->view('footer');
+                $this->load->view('successpage');
+                //$this->load->view('footer');
             }
             else
             {
-                //$this->load->view('formsuccess');
-                //Ther wew right send tem to the members page
+                //$this->load->view('myform');
+
+                //They did it wrong send them back to login
                 $this->load->view('header');
                 echo var_dump($this->input->post());
-                echo "Great success!";
+                echo validation_errors();
+                echo "<br>Wrong username or password<br>";
                 $this->load->view('loginpage');
-                $this->load->view('footer');
+                //$this->load->view('footer');
             }
 
+            echo $username, " ", $password, " ", $cond;
+            $this->load->view('footer');
 
         }else{
             $this->load->view('header');
             $this->load->view('loginpage');
             $this->load->view('footer');
         }
+    }
+
+    function Register(){
+
     }
 
 }
