@@ -19,14 +19,29 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
 
+		//$this->load->view('welcome_message');
+		$this->load->view('header');
+		$this->load->view('loginpage');
+		$this->load->view('footer');
 
 	}
 
 	public function tester(){
+		$this->load->model('users');
 		$this->load->model('balances');
-		$this->balances->Insert()
+		$this->load->library('query');
+
+		$this->load->helper('date');
+		$now = time();
+		$gmt = local_to_gmt($now);
+		echo $gmt;
+		echo date('Y-m-d H:i:s',$gmt);
+		echo print_r(Query::User("victor", "stuff", "please", "i@i.ca"));
+		echo var_dump(Query::User("victor", "stuff", "please", "i@i.ca"));
+
+		$this->users->Insert(Query::User("victor", "stuff", "please", "i@i.ca"));
+		//$this->balances->Insert()
 	}
 }
 
