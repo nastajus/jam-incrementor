@@ -4,10 +4,6 @@ class Main extends CI_Controller {
 
     function Login(){
 
-        $passwordSalty = hash('sha512',"stuff"."please");
-        echo "stuff please<br>";
-        echo $passwordSalty."<br>";
-
         if($this->input->post()){
             $this->load->library('form_validation');
 
@@ -22,7 +18,7 @@ class Main extends CI_Controller {
 
                 $this->load->model('users');
 
-                $cond = $this->users->Login($username, $passwordSalty );
+                $cond = $this->users->Login($username, $password );
 
                 if ($cond){
 
@@ -32,7 +28,7 @@ class Main extends CI_Controller {
                     //echo var_dump($this->input->post());
                     //echo validation_errors();
                     $this->load->view('successpage');
-                    //$this->load->view('footer');
+                    $this->load->view('footer');
 
                 }
                 else {
@@ -43,7 +39,7 @@ class Main extends CI_Controller {
                     //echo validation_errors();
                     echo "<br>Wrong username or password<br>";
                     $this->load->view('loginpage');
-                    //$this->load->view('footer');
+                    $this->load->view('footer');
 
                 }
 
@@ -59,11 +55,9 @@ class Main extends CI_Controller {
                 //echo validation_errors();
                 echo "<br>Invalid input<br>";
                 $this->load->view('loginpage');
-                //$this->load->view('footer');
+                $this->load->view('footer');
             }
 
-            echo $username, " ", $password, " ", $cond;
-            $this->load->view('footer');
 
         }else{
             $this->load->view('header');
