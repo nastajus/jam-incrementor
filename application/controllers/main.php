@@ -84,7 +84,21 @@ class Main extends CI_Controller {
             $this->load->view('footer');
         }
     }
-
+    function Contact(){
+        $this->load->view('header');
+        $this->load->view('contact');
+        $this->load->view('footer');
+    }
+    function About(){
+        $this->load->view('header');
+        $this->load->view('about');
+        $this->load->view('footer');
+    }
+    function Faq(){
+        $this->load->view('header');
+        $this->load->view('faq');
+        $this->load->view('footer');
+    }
     function Register(){
         $this->load->view('header');
         $this->load->view('register');
