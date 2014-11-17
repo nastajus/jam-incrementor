@@ -40,6 +40,7 @@ class Users extends CI_Model implements ISUD{
 
     function Insert($data)
     {
+        //check for integrity before inserting
         $this->db->insert('users',$data);
         return $this->db->insert_id();
     }
