@@ -30,7 +30,7 @@ class Test extends CI_Controller {
     public function tester(){
         $this->load->model('users');
         $this->load->model('balances');
-        $this->load->library('query');
+        $this->load->library('format');
 
         $this->load->helper('date');
         $now = time();
@@ -49,9 +49,13 @@ class Test extends CI_Controller {
 
         if($this->input->post()){
 
-            $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|is_unique[users.username]');
-            $this->form_validation->set_rules('password', 'Password', 'required|xss_clean');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.username]');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|callback__space_check|min_length[3]|max_length[32]|alpha_numeric|is_unique[users.username]');
+            $this->form_validation->set_rules('password', 'Password', 'required|xss_clean|matches[passconf]|min_length[8]');
+            $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|xss_clean');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]|callback__space_check|xss_clean');
+            $this->form_validation->set_rules('agree', 'I agree to terms and services.', 'callback__accept_terms' );
 
             if ($this->form_validation->run()){
                 $username = $this->input->post('username');
@@ -59,31 +63,63 @@ class Test extends CI_Controller {
                 $email = $this->input->post('email');
 
                 $this->load->model('users');
+                $this->load->library('format');
 
                 $cond = $this->users->Insert(Format::User($username, $password, $email));
 
+                var_dump($cond);
+
                 if ($cond){
+                    $data['message']= "Successfully Registered!!!";
                     $this->load->view('header');
-                    $this->load->view('home');
-                    $this->load->view('successpage');
-                    echo "<br><b>Registered</b><br>";
+                    $this->load->view('Message',$data);
                     $this->load->view('footer');
                 }
                 else {
+                    $data['message']= "Error Registering" . "<br/>" . $this->form_validation->error_string();
                     $this->load->view('header');
-                    //$this->load->view('invalid');
-                    echo $this->form_validation->error_string();
+                    $this->load->view('registerpage',$data);
                     $this->load->view('footer');
                 }
 
+            }else {
+                $data['message']= "Error Registering" . "<br/>" . $this->form_validation->error_string();
+                $this->load->view('header');
+                $this->load->view('registerpage',$data);
+                $this->load->view('footer');
             }
 
         }
         else {
             $this->load->view('header');
-            $this->load->view('register');
+            $this->load->view('registerpage');
             $this->load->view('footer');
 
         }
     }
+
+    function _space_check($str)
+    {
+
+        $pattern = '/ /';
+        $result = preg_match($pattern, $str);
+
+        if ($result)
+        {
+            $this->form_validation->set_message('_space_check', 'The %s field can not have spaces.');
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+
+    function _accept_terms(){
+        if (isset($_POST['accept'])) return TRUE;
+        $this->form_validation->set_message('_accept_terms', 'Please read and accept our terms and conditions.');
+        return FALSE;
+
+    }
+
 }
