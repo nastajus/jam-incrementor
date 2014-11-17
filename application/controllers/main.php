@@ -73,7 +73,9 @@ class Main extends CI_Controller {
     }
 
     function Register(){
-
+        $this->load->view('header');
+        $this->load->view('register');
+        $this->load->view('footer');
     }
 
 }
