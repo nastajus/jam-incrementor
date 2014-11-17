@@ -38,6 +38,7 @@
 |
 */
 $route['test/(:any)'] = "test/$1";
+$route['members/(:any)'] = "members/$1";
 $route['(:any)'] = "main/$1";
 $route['default_controller'] = "main";
 $route['404_override'] = '';

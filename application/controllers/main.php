@@ -52,7 +52,7 @@ class Main extends CI_Controller {
                       );
                       $this->session->set_userdata('logged_in', $sess_array);
                     }
-                    header('location: members');
+                    header('location: members/dashboard');
 
                 }
                 else {
@@ -91,11 +91,6 @@ class Main extends CI_Controller {
         $this->load->view('footer');
     }
     
-    function Members(){
-        $data = $this->loginCheck();
-        $this->load->view('header');
-        $this->load->view('successpage');
-        $this->load->view('footer');
-    }
+  
 
 }
