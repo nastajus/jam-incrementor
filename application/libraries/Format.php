@@ -10,7 +10,7 @@ if (!defined('BASEPATH'))
  * Time: 6:14 PM
  */
 
-class Query {
+class Format {
 
     static function GetGMT(){
         $CI =& get_instance();
@@ -33,13 +33,12 @@ class Query {
         );
     }
 
-    static function User($username, $password, $salt, $email){
+    static function User($username, $password, $email){
         return array(
             'username' => $username,
-            'password' => $password,
-            'salt' => $salt,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
             'email' => $email,
-            'date' => Query::GetGMT()
+            'date' => Format::GetGMT()
         );
     }
 }
