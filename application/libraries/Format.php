@@ -42,4 +42,13 @@ class Format {
             'date' => Format::GetGMT()
         );
     }
+
+    static function Transaction($user_id, $value, $type){
+        return array(
+            'user_id' => $user_id,
+            'value' => $value,
+            'type' => $type,
+            'date' => Format::GetGMT()
+        );
+    }
 }

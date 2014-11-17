@@ -14,7 +14,8 @@ class Transactions extends CI_Model implements ISUD{
 
     function Insert($data)
     {
-        // TODO: Implement Insert() method.
+        $this->db->insert('transactions',$data);
+        return $this->db->insert_id();
     }
 
     function Select($id)

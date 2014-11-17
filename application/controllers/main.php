@@ -96,7 +96,7 @@ class Main extends CI_Controller {
             $this->form_validation->set_rules('password', 'Password', 'required|xss_clean|matches[passconf]|min_length[8]');
             $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|xss_clean');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]|callback__space_check|xss_clean');
-            $this->form_validation->set_rules('agree', 'I agree to terms and services.', 'callback_accept_terms' );
+            $this->form_validation->set_rules('agree', '', 'callback_accept_terms' );
 
             if ($this->form_validation->run()){
                 $username = $this->input->post('username');
@@ -106,15 +106,20 @@ class Main extends CI_Controller {
                 $this->load->model('users');
                 $this->load->library('format');
 
-                $cond = $this->users->Insert(Format::User($username, $password, $email));
+                $success_id = $this->users->Insert(Format::User($username, $password, $email));
 
-                var_dump($cond);
+                if ($success_id){
 
-                if ($cond){
+                    $this->load->model('transactions');
+                    $this->transactions->Insert( Format::Transaction($success_id, 100, "CREDIT") );
+
+
                     $data['message']= "Successfully Registered!!!";
                     $this->load->view('header');
                     $this->load->view('Message',$data);
                     $this->load->view('footer');
+
+
                 }
                 else {
                     $data['message']= "Error Registering" . "<br/>" . $this->form_validation->error_string();
