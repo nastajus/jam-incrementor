@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-inverse" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -35,7 +35,16 @@
                             </ul>
                         </li>
                     </ul>
-                </div><!--/.nav-collapse -->
+                    <form class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                </div><!--/.navbar-collapse -->
             </div>
         </nav>
         <div class="container">
