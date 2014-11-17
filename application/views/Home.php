@@ -9,12 +9,12 @@
 <div class="row">
     <div class="col-xs-6">
         <p>
-            <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">Sign Up</a>
+            <a class="btn btn-lg btn-primary" href="register" role="button">Sign Up</a>
         </p>
     </div>
     <div class="col-xs-6">
         <p>
-            <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">Login</a>
+            <a class="btn btn-lg btn-primary" href="login" role="button">Login</a>
         </p>
     </div>
 </div>
