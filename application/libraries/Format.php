@@ -34,6 +34,7 @@ class Format {
     }
 
     static function User($username, $password, $email){
+        //record IP here?
         return array(
             'username' => $username,
             'password' => password_hash($password, PASSWORD_DEFAULT),

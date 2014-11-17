@@ -14,7 +14,7 @@ class Users extends CI_Model implements ISUD{
 
     function Login($username, $password)
     {
-        //Get Salt
+        //get user
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('username', $username);
@@ -40,7 +40,11 @@ class Users extends CI_Model implements ISUD{
 
     function Insert($data)
     {
-        //check for integrity before inserting
+        //check for integrity before inserting after validity pass
+        //possibly can be used internally bypassing the validity.
+
+        //check here array elements match $username, $password, $email
+
         $this->db->insert('users',$data);
         return $this->db->insert_id();
     }

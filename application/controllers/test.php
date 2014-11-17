@@ -49,9 +49,9 @@ class Test extends CI_Controller {
 
         if($this->input->post()){
 
-            $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|is_unique[users.username]');
             $this->form_validation->set_rules('password', 'Password', 'required|xss_clean');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email'); 	//TODO: test after can create but before finishing registration: is_unique[users.email]
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.username]');
 
             if ($this->form_validation->run()){
                 $username = $this->input->post('username');
@@ -59,7 +59,22 @@ class Test extends CI_Controller {
                 $email = $this->input->post('email');
 
                 $this->load->model('users');
-                $cond = $this->users->Register( $username, $password );
+
+                $cond = $this->users->Insert(Format::User($username, $password, $email));
+
+                if ($cond){
+                    $this->load->view('header');
+                    $this->load->view('home');
+                    $this->load->view('successpage');
+                    echo "<br><b>Registered</b><br>";
+                    $this->load->view('footer');
+                }
+                else {
+                    $this->load->view('header');
+                    //$this->load->view('invalid');
+                    echo $this->form_validation->error_string();
+                    $this->load->view('footer');
+                }
 
             }
 
